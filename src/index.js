@@ -1,0 +1,18 @@
+const express = require("express")
+const multer = require("multer")
+const mongoose = require("mongoose")
+const app = express()
+const routes = require("./routes/routes")
+app.use(express.json())
+app.use(multer().any())
+mongoose.set('strictQuery', false)
+mongoose.connect("mongodb+srv://AbhinavSIngh:9936522959@cluster0.wtmx5b4.mongodb.net/minemineDatabase", { useNewUrlParser: true })
+.then(()=>console.log("database connected"))
+.catch((error)=>console.log(error))
+app.use("/",routes)
+app.use(function(req,res){
+    res.status(404).send({status:false,message:"incorrect url"})
+})
+app.listen(3000,function(){
+    console.log("express running on port 3000")
+ })
